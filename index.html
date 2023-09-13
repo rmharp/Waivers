@@ -1,29 +1,48 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.rawgit.com/willowsystems/jSignature/master/libs/jSignature.min.js"></script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Include jQuery and jSignature libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/willowsystems/jSignature/master/libs/jSignature.min.js"></script>
+  </head>
+  <body>
+    <!-- Signature pad and buttons -->
+    <div id="signature"></div>
+    <img id="rendered" src="">
 
-Please draw your signature on the signature pad below: 
+    <script>
+      $("#signature").jSignature({
+        'background-color': 'transparent',
+        'decor-color': 'transparent'
+      });
 
-<div id="signature"></div>
+      function renderSignature(){
+        $("img#rendered").attr("src",$('#signature').jSignature('getData','default'));
+      }
 
-<img id="rendered" src="">
+      function saveImage(){ // This sends the image src to your Web App URL
+        var bytes = document.getElementById('rendered').src;
+        console.log(bytes);
 
-<script>
-  $("#signature").jSignature({
-    'background-color': 'transparent',
-    'decor-color': 'transparent'
-  });
+        // Replace 'YOUR_WEB_APP_URL_HERE' with your actual Web App URL
+        var webAppUrl = 'YOUR_WEB_APP_URL_HERE';
 
-  function renderSignature(){
-    $("img#rendered").attr("src",$('#signature').jSignature('getData','default'));
-  }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', webAppUrl, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-  function saveImage(){ //This sends the image src to saveImages function
-  var bytes = document.getElementById('rendered').src
-  console.log(bytes)
-  google.script.run.saveImage(bytes)
-  }
-</script>
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log('Signature saved successfully:', xhr.responseText);
+          }
+        };
 
-<input type="button" value="Render" onclick="renderSignature();"/>
-<input type="button" value="Add to Sheet" onclick="saveImage()"/>
-<input type="button" value="Close" onclick="google.script.host.close()" />
+        xhr.send('imageData=' + encodeURIComponent(bytes));
+      }
+    </script>
+
+    <input type="button" value="Render" onclick="renderSignature();"/>
+    <input type="button" value="Add to Sheet" onclick="saveImage()"/>
+    <input type="button" value="Close" onclick="google.script.host.close()" />
+  </body>
+</html>
