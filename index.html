@@ -1,36 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <head></head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.rawgit.com/willowsystems/jSignature/master/libs/jSignature.min.js"></script>
-    <body>
-        <form id="customerForm" action="https://script.google.com/macros/s/AKfycbwsROAVRdhfrBpSguir84rHFF3_1bQdiJFzk4QAlU9wD4Ql8U6PD29q3ylo9lLzqQr2yw/exec" method="POST">
-            Please sign your name in the pad below: <br>
-            First Name: <input type="text" name="username"><br>
-            Email: <input type="email" name="useremail"><br>
-            <div id="signature"></div><br>
-            <img id="rendered" src="" style="display:none">
-            <input type="button" value="save" onclick="renderSignature();saveImage()"/>
-        </form>
-    </body>
-    <script>
-        $("#signature").jSignature({
-            'background-color': 'transparent',
-            'decor-color': 'transparent'
-        });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/willowsystems/jSignature/master/libs/jSignature.min.js"></script>
 
-        function renderSignature(){
-            $("img#rendered").attr("src",$('#signature').jSignature('getData','default'));
-        }
+Please draw your signature on the signature pad below: 
 
-        function saveImage(e){ //This sends the image src to saveImages function
-            var bytes = document.getElementById('rendered').src;
-            console.log(bytes);
-            var sign = {
-            username: document.getElementsByName('username')[0].value,
-            useremail: document.getElementsByName('useremail')[0].value
-            };
-            google.script.run.saveImage(bytes, sign);
-        } 
-    </script>
-</html>
+<div id="signature"></div>
+
+<img id="rendered" src="">
+
+<script>
+  $("#signature").jSignature({
+    'background-color': 'transparent',
+    'decor-color': 'transparent'
+  });
+
+  function renderSignature(){
+    $("img#rendered").attr("src",$('#signature').jSignature('getData','default'));
+  }
+
+  function saveImage(){ //This sends the image src to saveImages function
+  var bytes = document.getElementById('rendered').src
+  console.log(bytes)
+  google.script.run.saveImage(bytes)
+  }
+</script>
+
+<input type="button" value="Render" onclick="renderSignature();"/>
+<input type="button" value="Add to Sheet" onclick="saveImage()"/>
+<input type="button" value="Close" onclick="google.script.host.close()" />
