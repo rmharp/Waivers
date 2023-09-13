@@ -30,6 +30,18 @@
                 #l1> li>*:first-child:before {counter-increment: c1; content: counter(c1, decimal)". "; color: black; font-family:"Times New Roman", serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 8pt; }
                 #l1> li:first-child>*:first-child:before {counter-increment: c1 0;  }
                 table, tbody {vertical-align: top; overflow: visible; }
+                .custom-button {
+                    background-color: #7CACD3; /* Background color */
+                    color: white; /* Text color */
+                    border: none; /* Remove border */
+                    border-radius: 5px; /* Rounded corners */
+                    padding: 12px 24px; /* Padding */
+                    font-size: 18px; /* Font size */
+                    cursor: pointer; /* Cursor style on hover */
+                }
+                .custom-button:hover {
+                    background-color: #2B577C; /* Darker background color on hover */
+                }
             </style>
         </head>
         <body>
@@ -261,7 +273,7 @@
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
                             <div style="display: flex; align-items: flex-end;">
                                 <div>
-                                    Participant Signature (if 18 or older):&nbsp;
+                                    &nbsp;Participant Signature (if 18 or older):&nbsp;
                                 </div>
                                 <div style="position: relative;">
                                     <canvas id="participantSignatureCanvas" style="border: 1px solid #000;"></canvas>
@@ -369,18 +381,18 @@
                         <p class="s9" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">
                             <div style="display: flex; align-items: flex-end;">
                                 <div>
-                                    Parent or Guardian’s Signature:&nbsp;
+                                    &nbsp;Parent or Guardian’s Signature:&nbsp;
                                 </div>
                                 <div style="position: relative;">
                                     <canvas id="parentGuardianSignatureCanvas" style="border: 1px solid #000;"></canvas>
                                     <button onclick="clearGuardianSignature()" style="position: absolute; bottom: 10px; right: 10px;">Clear</button>
                                 </div>
                                 <div>
-                                    <span class="s11"> </span>&nbsp;&nbsp;&nbsp;Print Name:
+                                    <span class="s11"> </span>&nbsp;&nbsp;Print Name:
                                     <input type="text" id="guardian_name" name="guardian_name" style="width: 80px;">
                                 </div>
                                 <div>
-                                    <span class="s11"> </span>&nbsp;&nbsp;&nbsp;Date: 
+                                    <span class="s11"> </span>&nbsp;&nbsp;Date: 
                                     <input type="date" id="date_guardian_signature" value="" style="transform: scale(0.9);">
                                 </div>
                             </div>
@@ -404,13 +416,17 @@
                     </td>
                 </tr>
             </table>
-            <h1 style="display: flex; align-items: center; justify-content: flex-end; padding-top: 4pt; text-indent: 0pt; text-align: right;">
-                Waiver accepted by&nbsp;
-                <img width="49" height="23" alt="image" src="CT_Wavier_23-24_files/Image_003.png"/>
-                <span class="s12">
-                    &nbsp;(Initials of CT)
-                </span>
-            </h1>            
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4pt; text-align: right;">
+                <button type="submit" class="custom-button" style="text-align: center; margin-left: 15px; padding: 8px 20px; font-size: 16px;">Submit</button>
+                <h1 style="display: flex; align-items: center; justify-content: flex-end; padding-top: 4pt; text-indent: 0pt; text-align: right;">
+                    
+                    Waiver accepted by&nbsp;
+                    <img width="49" height="23" alt="image" src="CT_Wavier_23-24_files/Image_003.png"/>
+                    <span class="s12">
+                        &nbsp;(Initials of CT)
+                    </span>
+                </h1>      
+            </div>      
         </body>
     </form>
 </html>
