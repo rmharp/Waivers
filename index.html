@@ -276,6 +276,7 @@
                                     &nbsp;Participant Signature (if 18 or older):&nbsp;
                                 </div>
                                 <div style="position: relative;">
+                                    <input type="hidden" id="signature_image" name="signature_image">
                                     <canvas id="participantSignatureCanvas" style="border: 1px solid #000;"></canvas>
                                     <button onclick="clearParticipantSignature()" style="position: absolute; bottom: 10px; right: 10px;">Clear</button>
                                 </div>
@@ -295,10 +296,45 @@
                                 function clearParticipantSignature() {
                                     signatureParticipantPad.clear();
                                 }
+                                // Capture and store the signature image data
+                                var signatureImageInput = document.getElementById('signature_image');
                             
                                 // Get the current date and format it as "YYYY-MM-DD"
                                 var currentDate = new Date().toISOString().split('T')[0];
                                 document.getElementById('date_signature').value = currentDate;
+
+                                // Capture and store the signature image data
+                                var signatureImageInput = document.getElementById('signature_image');
+                            
+
+                                // Handle form submission
+                                document.getElementById('submit').addEventListener('click', function (e) {
+                                    // Prevent the default button behavior (form submission)
+                                    e.preventDefault();
+
+                                    // Get the first name and last name
+                                    var firstName = document.getElementById('first_name').value;
+                                    var lastName = document.getElementById('last_name').value;
+                                    
+                                    // Generate a filename based on first name and last name
+                                    var fileName = firstName + ' ' + lastName + 'Signature.png';
+
+                                    // Get the canvas data as a data URL
+                                    var signatureImageData = participant_canvas.toDataURL('image/png');
+
+                                    // Set the value of the hidden input field to the signature image data
+                                    signatureImageInput.value = signatureImageData;
+
+                                    // Add an additional hidden input field for the filename
+                                    var fileNameInput = document.createElement('input');
+                                    fileNameInput.type = 'hidden';
+                                    fileNameInput.name = 'file_name';
+                                    fileNameInput.value = fileName;
+                                    this.form.appendChild(fileNameInput);
+
+                                    // Submit the form
+                                    this.submit();
+                                });
                             </script>
                         </p>
                     </td>
@@ -411,13 +447,41 @@
                                 // Get the current date and format it as "YYYY-MM-DD"
                                 var currentDate = new Date().toISOString().split('T')[0];
                                 document.getElementById('date_guardian_signature').value = currentDate;
+                                // Handle form submission when clicking the submit button
+                                document.getElementById('submit').addEventListener('click', function (e) {
+                                    // Prevent the default button behavior (form submission)
+                                    e.preventDefault();
+
+                                    // Get the first name and last name
+                                    var firstName = document.getElementById('firstNameId').value;
+                                    var lastName = document.getElementById('lastNameId').value;
+
+                                    // Generate a filename based on first name and last name
+                                    var fileName = firstName + ' ' + lastName + '.png';
+
+                                    // Get the canvas data as a data URL
+                                    var signatureImageData = canvas.toDataURL('image/png');
+
+                                    // Set the value of the hidden input field to the signature image data
+                                    document.getElementById('signature_image').value = signatureImageData;
+
+                                    // Add an additional hidden input field for the filename
+                                    var fileNameInput = document.createElement('input');
+                                    fileNameInput.type = 'hidden';
+                                    fileNameInput.name = 'file_name';
+                                    fileNameInput.value = fileName;
+                                    this.form.appendChild(fileNameInput);
+
+                                    // Submit the form
+                                    this.form.submit();
+                                });
                             </script>
                         </p>
                     </td>
                 </tr>
             </table>
             <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4pt; text-align: right;">
-                <button type="submit" class="custom-button" style="text-align: center; margin-left: 15px; padding: 8px 20px; font-size: 16px;">Submit</button>
+                <button type="submit" class="custom-button" style="text-align: center; margin-left: 15px; padding: 8px 20px; font-size: 16px;" id="submit">Submit</button>
                 <h1 style="display: flex; align-items: center; justify-content: flex-end; padding-top: 4pt; text-indent: 0pt; text-align: right;">
                     
                     Waiver accepted by&nbsp;
